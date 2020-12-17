@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.viewpager2.widget.ViewPager2;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
@@ -18,7 +19,9 @@ import android.os.Bundle;
 import android.os.Looper;
 import android.preference.PreferenceManager;
 import android.provider.Settings;
+import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -36,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
     TextView latTextView,lonTextView;
     int PERMISSION_ID = 44;
     SharedPreferences sharedPreferences;
+    ViewPager2 viewPager2;
 
     CurrentFragment currentFragment;
     ForecastFragment forecastFragment;
@@ -67,50 +71,44 @@ public class MainActivity extends AppCompatActivity {
 
         getLastLocation();
 
-        currentFragment = new CurrentFragment();
-        forecastFragment = new ForecastFragment();
-        cityFragment = new CityFragment();
-        settingsFragment = new SettingsFragment();
-
-        loadFragment(currentFragment);
-
+        viewPager2 = (ViewPager2) findViewById(R.id.viewPager2);
+        PagerAdapter pagerAdapter = new PagerAdapter(this);
+        viewPager2.setAdapter(pagerAdapter);
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationView);
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                Fragment selectedFragment =null;
                 switch (item.getItemId()){
                     case R.id.currentWeather:
-                        selectedFragment = currentFragment;
+                        viewPager2.setCurrentItem(0);
                         break;
                     case R.id.forecast:
-                        selectedFragment = forecastFragment;
+                        viewPager2.setCurrentItem(1);
                         break;
                     case R.id.city:
-                        selectedFragment = cityFragment;
+                        viewPager2.setCurrentItem(2);
                         break;
                     case R.id.settings:
-                        selectedFragment = settingsFragment;
+                        viewPager2.setCurrentItem(3);
                         break;
                 }
-                return loadFragment(selectedFragment);
+                return true;
             }
         });
-
     }
 
-    private boolean loadFragment(Fragment fragment) {
-        if (fragment != null) {
-            getSupportFragmentManager()
-                    .beginTransaction()
-                    .replace(R.id.fragmentContainer, fragment,fragment.getTag())
-                    .commit();
-            return true;
-        }
-        return false;
-    }
 
+//    private boolean loadFragment(Fragment fragment) {
+//        if (fragment != null) {
+//            getSupportFragmentManager()
+//                    .beginTransaction()
+//                    .replace(R.id.fragmentContainer, fragment,fragment.getTag())
+//                    .commit();
+//            return true;
+//        }
+//        return false;
+//    }
 
     @SuppressLint("MissingPermission")
     private void getLastLocation()

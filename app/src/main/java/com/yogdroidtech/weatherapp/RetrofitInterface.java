@@ -12,4 +12,9 @@ public interface RetrofitInterface {
             @Query("lon") String lon,
             @Query("appid") String appid,
             @Query("units") String units);
+
+    @GET("weather")
+    Call<CoordinateCity> getCityToCo(
+            @Query("q") String cityName,
+            @Query("appid") String appid);
 }
