@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@drawable/gradient">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -36,8 +37,10 @@
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_column="0"
+                        android:fontFamily="sans-serif-thin"
                         android:gravity="center"
                         android:text="12C"
+                        android:textColor="@color/textColor"
                         android:textSize="55sp" />
 
                     <ImageView
@@ -57,193 +60,218 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:text="Feels like 6C" />
+                        android:text="Feels like 6C"
+                        android:textColor="@color/textColor" />
 
                     <TextView
                         android:id="@+id/textViewDesc"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:text="Clear" />
+                        android:text="Clear"
+                        android:textColor="@color/textColor" />
                 </TableRow>
 
             </TableLayout>
 
-            <TableLayout
-                android:id="@+id/tableLayout3"
-                android:layout_width="355dp"
-                android:layout_height="222dp"
-                android:layout_marginTop="10dp"
-                android:stretchColumns="*"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textViewDesc">
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="288dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp">
 
-                <TableRow
-                    android:layout_width="match_parent"
+                <TableLayout
+                    android:id="@+id/tableLayout3"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="4dp">
+                    android:layout_marginTop="10dp"
+                    android:stretchColumns="*"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textViewDesc"
+                    tools:ignore="NotSibling">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_column="0"
-                        android:fontFamily="sans-serif"
-                        android:gravity="center_horizontal|left"
-                        android:text="Min. Temp" />
-
-                    <TextView
-                        android:id="@+id/textViewMin"
+                    <TableRow
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_column="1"
-                        android:fontFamily="sans-serif"
-                        android:text="4567" />
-                </TableRow>
+                        android:layout_margin="4dp">
 
-                <TableRow
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="4dp">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_column="0"
+                            android:fontFamily="sans-serif"
+                            android:text="Min. Temp"
+                            android:textColor="@color/textColor" />
 
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_column="0"
-                        android:fontFamily="sans-serif"
-                        android:text="Max. Temp" />
+                        <TextView
+                            android:id="@+id/textViewMin"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_column="1"
+                            android:fontFamily="sans-serif"
+                            android:text="4567"
+                            android:textColor="@color/textColor" />
+                    </TableRow>
 
-                    <TextView
-                        android:id="@+id/textViewMax"
+                    <TableRow
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_column="1"
-                        android:fontFamily="sans-serif" />
-                </TableRow>
+                        android:layout_margin="4dp">
 
-                <TableRow
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="4dp">
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_column="0"
+                            android:fontFamily="sans-serif"
+                            android:text="Max. Temp"
+                            android:textColor="@color/textColor" />
 
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_column="0"
-                        android:fontFamily="sans-serif"
-                        android:text="Pressure" />
+                        <TextView
+                            android:id="@+id/textViewMax"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_column="1"
+                            android:fontFamily="sans-serif"
+                            android:textColor="@color/textColor" />
+                    </TableRow>
 
-                    <TextView
-                        android:id="@+id/textViewPress"
+                    <TableRow
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_column="1"
-                        android:fontFamily="sans-serif" />
-                </TableRow>
+                        android:layout_margin="4dp">
 
-                <TableRow
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="4dp">
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_column="0"
+                            android:fontFamily="sans-serif"
+                            android:text="Pressure"
+                            android:textColor="@color/textColor" />
 
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_column="0"
-                        android:fontFamily="sans-serif"
-                        android:text="Humidity" />
+                        <TextView
+                            android:id="@+id/textViewPress"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_column="1"
+                            android:fontFamily="sans-serif"
+                            android:textColor="@color/textColor" />
+                    </TableRow>
 
-                    <TextView
-                        android:id="@+id/textViewHumid"
+                    <TableRow
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_column="1"
-                        android:fontFamily="sans-serif" />
-                </TableRow>
+                        android:layout_margin="4dp">
 
-                <TableRow
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="4dp">
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_column="0"
+                            android:fontFamily="sans-serif"
+                            android:text="Humidity"
+                            android:textColor="@color/textColor" />
 
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_column="0"
-                        android:fontFamily="sans-serif"
-                        android:text="Visibility" />
+                        <TextView
+                            android:id="@+id/textViewHumid"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_column="1"
+                            android:fontFamily="sans-serif"
+                            android:textColor="@color/textColor" />
+                    </TableRow>
 
-                    <TextView
-                        android:id="@+id/textViewVisible"
+                    <TableRow
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_column="1"
-                        android:fontFamily="sans-serif" />
-                </TableRow>
+                        android:layout_margin="4dp">
 
-                <TableRow
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="4dp">
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_column="0"
+                            android:fontFamily="sans-serif"
+                            android:text="Visibility"
+                            android:textColor="@color/textColor" />
 
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_column="0"
-                        android:fontFamily="sans-serif"
-                        android:text="Cloud Cover" />
+                        <TextView
+                            android:id="@+id/textViewVisible"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_column="1"
+                            android:fontFamily="sans-serif"
+                            android:textColor="@color/textColor" />
+                    </TableRow>
 
-                    <TextView
-                        android:id="@+id/textViewClouds"
+                    <TableRow
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_column="1"
-                        android:fontFamily="sans-serif" />
-                </TableRow>
+                        android:layout_margin="4dp">
 
-                <TableRow
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="4dp">
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_column="0"
+                            android:fontFamily="sans-serif"
+                            android:text="Cloud Cover"
+                            android:textColor="@color/textColor" />
 
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_column="0"
-                        android:fontFamily="sans-serif"
-                        android:text="Wind Speed" />
+                        <TextView
+                            android:id="@+id/textViewClouds"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_column="1"
+                            android:fontFamily="sans-serif"
+                            android:textColor="@color/textColor" />
+                    </TableRow>
 
-                    <TextView
-                        android:id="@+id/textViewWind"
+                    <TableRow
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_column="1"
-                        android:fontFamily="sans-serif" />
-                </TableRow>
+                        android:layout_margin="4dp">
 
-                <TableRow
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="4dp">
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_column="0"
+                            android:fontFamily="sans-serif"
+                            android:text="Wind Speed"
+                            android:textColor="@color/textColor" />
 
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_column="0"
-                        android:fontFamily="sans-serif"
-                        android:text="UV index" />
+                        <TextView
+                            android:id="@+id/textViewWind"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_column="1"
+                            android:fontFamily="sans-serif"
+                            android:textColor="@color/textColor" />
+                    </TableRow>
 
-                    <TextView
-                        android:id="@+id/textViewUV"
+                    <TableRow
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_column="1"
-                        android:fontFamily="sans-serif" />
-                </TableRow>
+                        android:layout_margin="4dp">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_column="0"
+                            android:fontFamily="sans-serif"
+                            android:text="UV index"
+                            android:textColor="@color/textColor" />
+
+                        <TextView
+                            android:id="@+id/textViewUV"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_column="1"
+                            android:fontFamily="sans-serif"
+                            android:textColor="@color/textColor" />
+                    </TableRow>
 
 
-            </TableLayout>
+                </TableLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
         </LinearLayout>
     </ScrollView>
 
