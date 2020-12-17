@@ -6,12 +6,12 @@ import retrofit2.http.Query;
 
 public interface RetrofitInterface {
 
-    @GET("onecall?units=metric")
+    @GET("onecall?")
     Call<WeatherData> getWeatherData(
             @Query("lat") String lat,
             @Query("lon") String lon,
-            @Query("appid") String appid,
-            @Query("units") String units);
+            @Query("units") String units,
+            @Query("appid") String appid);
 
     @GET("weather")
     Call<CoordinateCity> getCityToCo(

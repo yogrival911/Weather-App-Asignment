@@ -33,7 +33,7 @@ public class ForecastFragment extends Fragment {
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
         lat = sharedPreferences.getString("savedLat", "30");
         lon = sharedPreferences.getString("savedLon", "74");
-        units = sharedPreferences.getString("units","metrics");
+        units = sharedPreferences.getString("units","metric");
 
         recyclerView = (RecyclerView)view.findViewById(R.id.recyclerView);
         linearLayoutManager = new LinearLayoutManager(getContext());
@@ -41,7 +41,7 @@ public class ForecastFragment extends Fragment {
 
         Retrofit retrofit = RetrofitClientInstance.getRetrofit();
         RetrofitInterface retrofitInterface = retrofit.create(RetrofitInterface.class);
-        Call<WeatherData> dataCall = retrofitInterface.getWeatherData(lat,lon,appid, units);
+        Call<WeatherData> dataCall = retrofitInterface.getWeatherData(lat,lon,units, appid);
         dataCall.enqueue(new Callback<WeatherData>() {
             @Override
             public void onResponse(Call<WeatherData> call, Response<WeatherData> response) {

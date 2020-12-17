@@ -1,16 +1,15 @@
 package com.yogdroidtech.weatherapp;
 
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.CalendarView;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -18,8 +17,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.squareup.picasso.Picasso;
+
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 
 import retrofit2.Call;
@@ -35,6 +35,9 @@ public class CityFragment extends Fragment {
     CalendarView calendarView;
     Spinner spinnerCity;
     int increment;
+    WeatherData downWeatherData;
+    TextView cityTemp, cityDesc, cityFeels, cityMorn,cityDay,cityNight;
+    ImageView cityIcon;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -43,11 +46,19 @@ public class CityFragment extends Fragment {
         dateView = (TextView)view.findViewById(R.id.dateView);
         calendarView = (CalendarView)view.findViewById(R.id.calendarView);
         spinnerCity = (Spinner)view.findViewById(R.id.spinnerCity);
+        cityTemp = (TextView)view.findViewById(R.id.cityTemp);
+        cityDesc = (TextView)view.findViewById(R.id.cityDesc);
+        cityFeels = (TextView)view.findViewById(R.id.cityFeels);
+        cityMorn = (TextView)view.findViewById(R.id.cityMorn);
+        cityDay = (TextView)view.findViewById(R.id.cityDay);
+        cityNight = (TextView)view.findViewById(R.id.cityNight);
 
-        units = PreferenceManager.getDefaultSharedPreferences(getContext()).getString("units","metrics");
+        cityIcon = (ImageView)view.findViewById(R.id.cityIcon);
+
+        units = PreferenceManager.getDefaultSharedPreferences(getContext()).getString("units","metric");
 
         increment = 0;
-
+        downWeatherData = new WeatherData();
         long currentTime = System.currentTimeMillis();
         long maxDate = currentTime + 1000 * 60 * 60 * 24 * 7;
         long minDate = currentTime ;
@@ -62,7 +73,46 @@ public class CityFragment extends Fragment {
         Log.i("yogesh",day+"");
         Log.i("yogesh",increment+" increment");
 
-        spinnerCity.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        String searchCityOnCreate = spinnerCity.getSelectedItem().toString();
+        Retrofit retrofit = RetrofitClientInstance.getRetrofit();
+        RetrofitInterface retrofitInterface = retrofit.create(RetrofitInterface.class);
+
+        Call<CoordinateCity> coordinateCityCall = retrofitInterface.getCityToCo(searchCityOnCreate,appid);
+        coordinateCityCall.enqueue(new Callback<CoordinateCity>() {
+            @Override
+            public void onResponse(Call<CoordinateCity> call, Response<CoordinateCity> response) {
+                String lat = response.body().getCoord().getLat().toString();
+                String lon = response.body().getCoord().getLon().toString();
+
+                Retrofit retrofit = RetrofitClientInstance.getRetrofit();
+                RetrofitInterface retrofitInterface = retrofit.create(RetrofitInterface.class);
+
+                Call<WeatherData> weatherDataCall = retrofitInterface.getWeatherData(lat, lon, units,appid);
+                weatherDataCall.enqueue(new Callback<WeatherData>() {
+                    @Override
+                    public void onResponse(Call<WeatherData> call, Response<WeatherData> response) {
+                        Log.i("yogesh", response.body().toString());
+                        Log.i("yogesh", increment+"");
+
+                        downWeatherData = response.body();
+                        setUI(downWeatherData, increment);
+                    }
+
+                    @Override
+                    public void onFailure(Call<WeatherData> call, Throwable t) {
+
+                    }
+                });
+
+            }
+
+            @Override
+            public void onFailure(Call<CoordinateCity> call, Throwable t) {
+
+            }
+        });
+
+                spinnerCity.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 String searchCity = adapterView.getItemAtPosition(i).toString();
@@ -83,12 +133,15 @@ public class CityFragment extends Fragment {
                         Retrofit retrofit = RetrofitClientInstance.getRetrofit();
                         RetrofitInterface retrofitInterface = retrofit.create(RetrofitInterface.class);
 
-                        Call<WeatherData> weatherDataCall = retrofitInterface.getWeatherData(lat, lon, appid,units);
+                        Call<WeatherData> weatherDataCall = retrofitInterface.getWeatherData(lat, lon, units,appid);
                         weatherDataCall.enqueue(new Callback<WeatherData>() {
                             @Override
                             public void onResponse(Call<WeatherData> call, Response<WeatherData> response) {
                                 Log.i("yogesh", response.body().toString());
                                 Log.i("yogesh", increment+"");
+
+                                downWeatherData = response.body();
+                                setUI(downWeatherData,increment);
                             }
 
                             @Override
@@ -120,7 +173,7 @@ public class CityFragment extends Fragment {
             @Override
             public void onSelectedDayChange(@NonNull CalendarView calendarView, int i, int i1, int i2) {
                 increment = i2-day;
-                dateView.setText(increment+"");
+                dateView.setText(i2+"-"+(i1+1)+"-"+i);
 
                 String searchCity = spinnerCity.getSelectedItem().toString();
 
@@ -139,12 +192,14 @@ public class CityFragment extends Fragment {
                         Retrofit retrofit = RetrofitClientInstance.getRetrofit();
                         RetrofitInterface retrofitInterface = retrofit.create(RetrofitInterface.class);
 
-                        Call<WeatherData> weatherDataCall = retrofitInterface.getWeatherData(lat, lon, appid,units);
+                        Call<WeatherData> weatherDataCall = retrofitInterface.getWeatherData(lat, lon, units,appid);
                         weatherDataCall.enqueue(new Callback<WeatherData>() {
                             @Override
                             public void onResponse(Call<WeatherData> call, Response<WeatherData> response) {
                                 Log.i("yogesh", response.body().toString());
                                 Log.i("yogesh", increment+"");
+                                downWeatherData = response.body();
+                                setUI(downWeatherData,increment);
                             }
 
                             @Override
@@ -165,5 +220,22 @@ public class CityFragment extends Fragment {
             }
         });
         return view;
+    }
+
+    public void setUI(WeatherData downWeatherData, int increment){
+        Log.i("yogesh","download function "+ downWeatherData.toString());
+        Log.i("yogesh","increment  "+ increment+"");
+
+        cityTemp.setText(downWeatherData.getDaily().get(increment).getTemp().getMin().intValue()+"/"+ downWeatherData.getDaily().get(increment).getTemp().getMax().intValue()+"\u2103");
+        cityDesc.setText(downWeatherData.getDaily().get(increment).getWeather().get(0).getMain());
+
+        String iconCode = downWeatherData.getDaily().get(increment).getWeather().get(0).getIcon();
+        String url = "https://openweathermap.org/img/wn/"+iconCode+"@2x.png";
+        Log.i("yogesh", url);
+        Picasso.with(getActivity()).load(url).into(cityIcon);
+
+        cityMorn.setText(downWeatherData.getDaily().get(increment).getTemp().getMorn().intValue()+"\u2103");
+        cityDay.setText(downWeatherData.getDaily().get(increment).getTemp().getDay().intValue()+"\u2103");
+        cityNight.setText(downWeatherData.getDaily().get(increment).getTemp().getNight().intValue()+"\u2103");
     }
 }
