@@ -96,6 +96,12 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
         });
+        viewPager2.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+            @Override
+            public void onPageSelected(int position) {
+                bottomNavigationView.getMenu().getItem(position).setChecked(true);
+            }
+        });
     }
 
 

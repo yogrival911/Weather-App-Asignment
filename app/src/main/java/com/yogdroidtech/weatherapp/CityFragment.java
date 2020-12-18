@@ -38,6 +38,7 @@ public class CityFragment extends Fragment {
     WeatherData downWeatherData;
     TextView cityTemp, cityDesc, cityFeels, cityMorn,cityDay,cityNight;
     ImageView cityIcon;
+    Boolean isCelActive;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -55,7 +56,9 @@ public class CityFragment extends Fragment {
 
         cityIcon = (ImageView)view.findViewById(R.id.cityIcon);
 
-        units = PreferenceManager.getDefaultSharedPreferences(getContext()).getString("units","metric");
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+        units = sharedPreferences.getString("units","metric");
+        isCelActive = sharedPreferences.getBoolean("isCelActive", true);
 
         increment = 0;
         downWeatherData = new WeatherData();
@@ -226,7 +229,6 @@ public class CityFragment extends Fragment {
         Log.i("yogesh","download function "+ downWeatherData.toString());
         Log.i("yogesh","increment  "+ increment+"");
 
-        cityTemp.setText(downWeatherData.getDaily().get(increment).getTemp().getMin().intValue()+"/"+ downWeatherData.getDaily().get(increment).getTemp().getMax().intValue()+"\u2103");
         cityDesc.setText(downWeatherData.getDaily().get(increment).getWeather().get(0).getMain());
 
         String iconCode = downWeatherData.getDaily().get(increment).getWeather().get(0).getIcon();
@@ -234,8 +236,20 @@ public class CityFragment extends Fragment {
         Log.i("yogesh", url);
         Picasso.with(getActivity()).load(url).into(cityIcon);
 
-        cityMorn.setText(downWeatherData.getDaily().get(increment).getTemp().getMorn().intValue()+"\u2103");
-        cityDay.setText(downWeatherData.getDaily().get(increment).getTemp().getDay().intValue()+"\u2103");
-        cityNight.setText(downWeatherData.getDaily().get(increment).getTemp().getNight().intValue()+"\u2103");
+        if(isCelActive){
+            cityTemp.setText(downWeatherData.getDaily().get(increment).getTemp().getMin().intValue()
+                    +"/"+ downWeatherData.getDaily().get(increment).getTemp().getMax().intValue()+"\u00B0"+"C");
+            cityMorn.setText(downWeatherData.getDaily().get(increment).getTemp().getMorn().intValue()+"\u00B0"+"C");
+            cityDay.setText(downWeatherData.getDaily().get(increment).getTemp().getDay().intValue()+"\u00B0"+"C");
+            cityNight.setText(downWeatherData.getDaily().get(increment).getTemp().getNight().intValue()+"\u00B0"+"C");
+        }
+        else {
+            cityTemp.setText(downWeatherData.getDaily().get(increment).getTemp().getMin().intValue()
+                    +"/"+ downWeatherData.getDaily().get(increment).getTemp().getMax().intValue()+"\u00B0"+"F");
+            cityMorn.setText(downWeatherData.getDaily().get(increment).getTemp().getMorn().intValue()+"\u00B0"+"F");
+            cityDay.setText(downWeatherData.getDaily().get(increment).getTemp().getDay().intValue()+"\u00B0"+"F");
+            cityNight.setText(downWeatherData.getDaily().get(increment).getTemp().getNight().intValue()+"\u00B0"+"F");
+        }
+
     }
 }

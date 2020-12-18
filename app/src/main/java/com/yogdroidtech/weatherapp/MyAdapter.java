@@ -1,6 +1,9 @@
 package com.yogdroidtech.weatherapp;
 
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
+import android.text.BoringLayout;
 import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -19,7 +22,6 @@ import java.util.Date;
 public class MyAdapter extends RecyclerView.Adapter <MyAdapter.MyViewHolder> {
     Context context;
     WeatherData weatherData;
-
     public MyAdapter(Context context, WeatherData weatherData) {
         this.context = context;
         this.weatherData = weatherData;
@@ -45,7 +47,17 @@ public class MyAdapter extends RecyclerView.Adapter <MyAdapter.MyViewHolder> {
         String iconCode = weatherData.getDaily().get(position).getWeather().get(0).getIcon();
         String iconUrl = "https://openweathermap.org/img/wn/"+iconCode+"@2x.png";
         Picasso.with(context).load(iconUrl).into(holder.icon);
-        holder.minMax.setText(weatherData.getDaily().get(position).getTemp().getMin().intValue() + "/" + weatherData.getDaily().get(position).getTemp().getMin().intValue()+" \u2103");
+
+        if(CurrentFragment.isCelActive){
+            holder.minMax.setText(weatherData.getDaily().get(position).getTemp().getMin().intValue()
+                    + "/" + weatherData.getDaily().get(position).getTemp().getMin().intValue()+" \u00B0"+"C");
+
+        }
+        else{
+            holder.minMax.setText(weatherData.getDaily().get(position).getTemp().getMin().intValue()
+                    + "/" + weatherData.getDaily().get(position).getTemp().getMin().intValue()+" \u00B0"+"F");
+
+        }
 
     }
 

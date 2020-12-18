@@ -25,11 +25,12 @@ import retrofit2.Retrofit;
 
 public class CurrentFragment extends Fragment {
     String appid = "8931dea8ea47fe58dee9f3e02a31c049";
-    SharedPreferences sharedPreferences;
     String lat, lon, units;
     ImageView imageViewIcon;
     TextView textViewTemp, textViewFeels,textViewDesc, textViewMin,textViewMax,textViewPress,textViewHumid,textViewVisible,textViewClouds;
     TextView textViewCity, textViewWind, textViewUV;
+    SharedPreferences sharedPreferences;
+    public static Boolean isCelActive;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -39,6 +40,8 @@ public class CurrentFragment extends Fragment {
         lat = sharedPreferences.getString("savedLat", "30");
         lon = sharedPreferences.getString("savedLon", "74");
         units = sharedPreferences.getString("units","metric");
+
+        isCelActive = sharedPreferences.getBoolean("isCelActive", true);
 
         imageViewIcon = (ImageView)view.findViewById(R.id.imageViewIcon);
         textViewFeels = (TextView)view.findViewById(R.id.textViewFeels);
@@ -66,13 +69,23 @@ public class CurrentFragment extends Fragment {
                 String url = "https://openweathermap.org/img/wn/"+iconCode+"@2x.png";
                 Log.i("yogesh", url);
                 Picasso.with(getActivity()).load(url).into(imageViewIcon);
-                textViewTemp.setText(response.body().getCurrent().getTemp().intValue()+"\u2103");
 
-                textViewFeels.setText("Feels like "+response.body().getCurrent().getFeelsLike().intValue()+ "\u2103" );
+                if(isCelActive){
+                    textViewTemp.setText(response.body().getCurrent().getTemp().intValue()+"\u00B0"+"C");
+                    textViewMin.setText(response.body().getDaily().get(0).getTemp().getMin().intValue()+"\u00B0"+"C");
+                    textViewMax.setText(response.body().getDaily().get(0).getTemp().getMax().intValue()+"\u00B0"+"C");
+                    textViewFeels.setText("Feels like "+response.body().getCurrent().getFeelsLike().intValue()+"\u00B0"+"C" );
+                }
+                else{
+                    textViewTemp.setText(response.body().getCurrent().getTemp().intValue()+"\u00B0"+"F");
+                    textViewMin.setText(response.body().getDaily().get(0).getTemp().getMin().intValue()+"\u00B0"+"F");
+                    textViewMax.setText(response.body().getDaily().get(0).getTemp().getMax().intValue()+"\u00B0"+"F");
+                    textViewFeels.setText("Feels like "+response.body().getCurrent().getFeelsLike().intValue()+"\u00B0"+"F" );
+                }
+
+
                 String description = response.body().getCurrent().getWeather().get(0).getDescription();
                 textViewDesc.setText(description.substring(0,1).toUpperCase()+description.substring(1).toLowerCase());
-                textViewMin.setText(response.body().getDaily().get(0).getTemp().getMin().intValue()+"\u2103");
-                textViewMax.setText(response.body().getDaily().get(0).getTemp().getMax().intValue()+"\u2103");
                 textViewPress.setText(response.body().getCurrent().getPressure()+" mBar");
                 textViewHumid.setText(response.body().getCurrent().getHumidity()+" %");
                 textViewClouds.setText(response.body().getCurrent().getClouds()+" %");

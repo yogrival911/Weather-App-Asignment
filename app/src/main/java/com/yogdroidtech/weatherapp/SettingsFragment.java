@@ -24,6 +24,9 @@ public class SettingsFragment extends Fragment {
         buttonCel = (Button)view.findViewById(R.id.buttonCel);
         buttonFar = (Button)view.findViewById(R.id.buttonFar);
 
+        buttonCel.setText("\u00B0"+"C");
+        buttonFar.setText("\u00B0"+"F");
+
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
         isCelActive = sharedPreferences.getBoolean("isCelActive", true);
 
@@ -32,7 +35,6 @@ public class SettingsFragment extends Fragment {
             buttonCel.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
         }
         else {
-
             buttonFar.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
             buttonCel.setBackgroundColor(getResources().getColor(R.color.inActiveButton));
         }
