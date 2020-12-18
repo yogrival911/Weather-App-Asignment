@@ -26,6 +26,18 @@
                 android:gravity="center"
                 android:text="User" />
 
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:fontFamily="sans-serif-thin"
+                android:gravity="center_horizontal"
+                android:text="7-Day Forecast"
+                android:textColor="@color/textColor"
+                android:textSize="18sp" />
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerView"
                 android:layout_width="match_parent"

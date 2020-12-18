@@ -27,10 +27,22 @@ SharedPreferences sharedPreferences;
             @Override
             public void onClick(View view) {
                 String userName = editTextUserName.getText().toString();
-                sharedPreferences.edit().putString("userName",userName ).commit();
-                Toast.makeText(getApplicationContext(), "User Saved", Toast.LENGTH_SHORT).show();
-                finish();
+                if(userName.trim().length()>0){
+                    String formatUserName = userName.substring(0,1).toUpperCase()+userName.substring(1).toLowerCase();
+                    sharedPreferences.edit().putString("userName",formatUserName ).commit();
+                    Toast.makeText(getApplicationContext(), "User Saved", Toast.LENGTH_SHORT).show();
+                    finish();
+                }
+                else{
+                    Toast.makeText(getApplicationContext(), "Please Enter Name", Toast.LENGTH_SHORT).show();
+                }
+
             }
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+
     }
 }

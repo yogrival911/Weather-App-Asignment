@@ -152,7 +152,6 @@ public class CityFragment extends Fragment {
 
                             }
                         });
-
                     }
 
                     @Override
@@ -160,9 +159,6 @@ public class CityFragment extends Fragment {
 
                     }
                 });
-
-
-
             }
 
             @Override

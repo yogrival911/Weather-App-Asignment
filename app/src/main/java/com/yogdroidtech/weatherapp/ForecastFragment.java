@@ -21,21 +21,20 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 
 public class ForecastFragment extends Fragment {
-    String appid = "8931dea8ea47fe58dee9f3e02a31c049";
-    SharedPreferences sharedPreferences;
-    String lat, lon, units;
+
     RecyclerView recyclerView;
     LinearLayoutManager linearLayoutManager;
+    TextView textViewUser;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.forecast_layout, container, false);
-        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
-        lat = sharedPreferences.getString("savedLat", "30");
-        lon = sharedPreferences.getString("savedLon", "74");
-        units = sharedPreferences.getString("units","metric");
 
+        textViewUser = (TextView)view.findViewById(R.id.textViewUser);
         recyclerView = (RecyclerView)view.findViewById(R.id.recyclerView);
+        String user = CurrentFragment.userName;
+        textViewUser.setText(user);
+
         linearLayoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(linearLayoutManager);
         MyAdapter myAdapter = new MyAdapter(getContext(),CurrentFragment.weatherData);

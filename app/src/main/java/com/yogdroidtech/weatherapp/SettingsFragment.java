@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -16,6 +17,7 @@ public class SettingsFragment extends Fragment {
     Button buttonCel, buttonFar;
     SharedPreferences sharedPreferences;
     Boolean isCelActive;
+    TextView user;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -23,7 +25,9 @@ public class SettingsFragment extends Fragment {
 
         buttonCel = (Button)view.findViewById(R.id.buttonCel);
         buttonFar = (Button)view.findViewById(R.id.buttonFar);
+        user = (TextView)view.findViewById(R.id.user);
 
+        user.setText(CurrentFragment.userName);
         buttonCel.setText("\u00B0"+"C");
         buttonFar.setText("\u00B0"+"F");
 
