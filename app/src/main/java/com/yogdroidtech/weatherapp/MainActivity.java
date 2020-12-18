@@ -105,17 +105,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-//    private boolean loadFragment(Fragment fragment) {
-//        if (fragment != null) {
-//            getSupportFragmentManager()
-//                    .beginTransaction()
-//                    .replace(R.id.fragmentContainer, fragment,fragment.getTag())
-//                    .commit();
-//            return true;
-//        }
-//        return false;
-//    }
-
     @SuppressLint("MissingPermission")
     private void getLastLocation()
     {

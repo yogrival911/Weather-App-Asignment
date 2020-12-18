@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -47,10 +48,16 @@ public class SettingsFragment extends Fragment {
         buttonCel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                buttonFar.setBackgroundColor(getResources().getColor(R.color.inActiveButton));
-                buttonCel.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
-                sharedPreferences.edit().putString("units","metric").commit();
-                sharedPreferences.edit().putBoolean("isCelActive",true).commit();
+
+                if(isCelActive){
+                    Toast.makeText(getContext(), "Units already in Celsius", Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    buttonFar.setBackgroundColor(getResources().getColor(R.color.inActiveButton));
+                    buttonCel.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
+                    sharedPreferences.edit().putString("units","metric").commit();
+                    sharedPreferences.edit().putBoolean("isCelActive",true).commit();
+                }
 
             }
         });
@@ -58,10 +65,15 @@ public class SettingsFragment extends Fragment {
         buttonFar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                buttonFar.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
-                buttonCel.setBackgroundColor(getResources().getColor(R.color.inActiveButton));
-                sharedPreferences.edit().putString("units","imperial").commit();
-                sharedPreferences.edit().putBoolean("isCelActive",false).commit();
+              if(isCelActive){
+                  buttonFar.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
+                  buttonCel.setBackgroundColor(getResources().getColor(R.color.inActiveButton));
+                  sharedPreferences.edit().putString("units","imperial").commit();
+                  sharedPreferences.edit().putBoolean("isCelActive",false).commit();
+              }
+              else {
+                  Toast.makeText(getContext(), "Units already in Fahrenheit", Toast.LENGTH_SHORT).show();
+              }
             }
         });
         return view;

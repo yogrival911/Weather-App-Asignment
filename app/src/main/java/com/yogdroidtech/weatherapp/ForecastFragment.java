@@ -25,10 +25,13 @@ public class ForecastFragment extends Fragment {
     RecyclerView recyclerView;
     LinearLayoutManager linearLayoutManager;
     TextView textViewUser;
+    SharedPreferences sharedPreferences;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.forecast_layout, container, false);
+
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
 
         textViewUser = (TextView)view.findViewById(R.id.textViewUser);
         recyclerView = (RecyclerView)view.findViewById(R.id.recyclerView);
@@ -40,7 +43,7 @@ public class ForecastFragment extends Fragment {
         MyAdapter myAdapter = new MyAdapter(getContext(),CurrentFragment.weatherData);
         recyclerView.setAdapter(myAdapter);
 
-
         return view;
     }
+
 }

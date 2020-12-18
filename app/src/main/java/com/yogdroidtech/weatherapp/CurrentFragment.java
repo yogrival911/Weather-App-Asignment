@@ -67,54 +67,7 @@ public class CurrentFragment extends Fragment {
         boolean isConnected = activeNetwork != null && activeNetwork.isConnectedOrConnecting();
 
         if(isConnected){
-
-            Retrofit retrofit = RetrofitClientInstance.getRetrofit();
-            RetrofitInterface retrofitInterface = retrofit.create(RetrofitInterface.class);
-
-            Call<WeatherData> dataCall = retrofitInterface.getWeatherData(lat,lon,units, appid);
-            dataCall.enqueue(new Callback<WeatherData>() {
-                @Override
-                public void onResponse(Call<WeatherData> call, Response<WeatherData> response) {
-                    Log.i("yogesh", response.body().toString());
-
-                    weatherData = response.body();
-
-                    String iconCode = response.body().getCurrent().getWeather().get(0).getIcon();
-                    String url = "https://openweathermap.org/img/wn/"+iconCode+"@2x.png";
-                    Log.i("yogesh", url);
-                    Picasso.with(getActivity()).load(url).into(imageViewIcon);
-
-                    if(isCelActive){
-                        textViewTemp.setText(response.body().getCurrent().getTemp().intValue()+"\u00B0"+"C");
-                        textViewMin.setText(response.body().getDaily().get(0).getTemp().getMin().intValue()+"\u00B0"+"C");
-                        textViewMax.setText(response.body().getDaily().get(0).getTemp().getMax().intValue()+"\u00B0"+"C");
-                        textViewFeels.setText("Feels like "+response.body().getCurrent().getFeelsLike().intValue()+"\u00B0"+"C" );
-                    }
-                    else{
-                        textViewTemp.setText(response.body().getCurrent().getTemp().intValue()+"\u00B0"+"F");
-                        textViewMin.setText(response.body().getDaily().get(0).getTemp().getMin().intValue()+"\u00B0"+"F");
-                        textViewMax.setText(response.body().getDaily().get(0).getTemp().getMax().intValue()+"\u00B0"+"F");
-                        textViewFeels.setText("Feels like "+response.body().getCurrent().getFeelsLike().intValue()+"\u00B0"+"F" );
-                    }
-
-
-                    String description = response.body().getCurrent().getWeather().get(0).getDescription();
-                    textViewDesc.setText(description.substring(0,1).toUpperCase()+description.substring(1).toLowerCase());
-                    textViewPress.setText(response.body().getCurrent().getPressure()+" mBar");
-                    textViewHumid.setText(response.body().getCurrent().getHumidity()+" %");
-                    textViewClouds.setText(response.body().getCurrent().getClouds()+" %");
-                    textViewVisible.setText(response.body().getCurrent().getVisibility()+" meters");
-                    textViewWind.setText(response.body().getCurrent().getWindSpeed() + " m/s");
-                    textViewUV.setText(response.body().getCurrent().getUvi().toString());
-
-                }
-
-                @Override
-                public void onFailure(Call<WeatherData> call, Throwable t) {
-                    Log.i("yogesh", t.toString());
-                    Toast.makeText(getContext(), "Data Parsing Failed", Toast.LENGTH_SHORT).show();
-                }
-            });
+            networkCall();
         }
         else {
             Toast.makeText(getContext(), "Turn On Internet",Toast.LENGTH_LONG).show();
@@ -122,5 +75,66 @@ public class CurrentFragment extends Fragment {
 
 
         return view;
+    }
+
+    public void networkCall(){
+        Retrofit retrofit = RetrofitClientInstance.getRetrofit();
+        RetrofitInterface retrofitInterface = retrofit.create(RetrofitInterface.class);
+
+        Call<WeatherData> dataCall = retrofitInterface.getWeatherData(lat,lon,units, appid);
+        dataCall.enqueue(new Callback<WeatherData>() {
+            @Override
+            public void onResponse(Call<WeatherData> call, Response<WeatherData> response) {
+                Log.i("yogesh", response.body().toString());
+
+                weatherData = response.body();
+
+                String iconCode = response.body().getCurrent().getWeather().get(0).getIcon();
+                String url = "https://openweathermap.org/img/wn/"+iconCode+"@2x.png";
+                Log.i("yogesh", url);
+                Picasso.with(getActivity()).load(url).into(imageViewIcon);
+
+                if(isCelActive){
+                    textViewTemp.setText(response.body().getCurrent().getTemp().intValue()+"\u00B0"+"C");
+                    textViewMin.setText(response.body().getDaily().get(0).getTemp().getMin().intValue()+"\u00B0"+"C");
+                    textViewMax.setText(response.body().getDaily().get(0).getTemp().getMax().intValue()+"\u00B0"+"C");
+                    textViewFeels.setText("Feels like "+response.body().getCurrent().getFeelsLike().intValue()+"\u00B0"+"C" );
+                }
+                else{
+                    textViewTemp.setText(response.body().getCurrent().getTemp().intValue()+"\u00B0"+"F");
+                    textViewMin.setText(response.body().getDaily().get(0).getTemp().getMin().intValue()+"\u00B0"+"F");
+                    textViewMax.setText(response.body().getDaily().get(0).getTemp().getMax().intValue()+"\u00B0"+"F");
+                    textViewFeels.setText("Feels like "+response.body().getCurrent().getFeelsLike().intValue()+"\u00B0"+"F" );
+                }
+
+
+                String description = response.body().getCurrent().getWeather().get(0).getDescription();
+                textViewDesc.setText(description.substring(0,1).toUpperCase()+description.substring(1).toLowerCase());
+                textViewPress.setText(response.body().getCurrent().getPressure()+" mBar");
+                textViewHumid.setText(response.body().getCurrent().getHumidity()+" %");
+                textViewClouds.setText(response.body().getCurrent().getClouds()+" %");
+                textViewVisible.setText(response.body().getCurrent().getVisibility()+" meters");
+                textViewWind.setText(response.body().getCurrent().getWindSpeed() + " m/s");
+                textViewUV.setText(response.body().getCurrent().getUvi().toString());
+
+            }
+
+            @Override
+            public void onFailure(Call<WeatherData> call, Throwable t) {
+                Log.i("yogesh", t.toString());
+                Toast.makeText(getContext(), "Data Parsing Failed", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        sharedPreferences.registerOnSharedPreferenceChangeListener(new SharedPreferences.OnSharedPreferenceChangeListener() {
+            @Override
+            public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String s) {
+                networkCall();
+            }
+        });
     }
 }
