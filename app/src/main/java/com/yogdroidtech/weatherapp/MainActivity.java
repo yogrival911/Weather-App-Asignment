@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
     int PERMISSION_ID = 44;
     SharedPreferences sharedPreferences;
     ViewPager2 viewPager2;
-
+    PagerAdapter pagerAdapter;
     CurrentFragment currentFragment;
     ForecastFragment forecastFragment;
     CityFragment cityFragment;
@@ -72,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
         getLastLocation();
 
         viewPager2 = (ViewPager2) findViewById(R.id.viewPager2);
-        PagerAdapter pagerAdapter = new PagerAdapter(this);
+        pagerAdapter = new PagerAdapter(this);
         viewPager2.setAdapter(pagerAdapter);
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationView);
@@ -103,7 +103,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-
 
     @SuppressLint("MissingPermission")
     private void getLastLocation()
@@ -217,6 +216,12 @@ public class MainActivity extends AppCompatActivity {
     public void onResume()
     {
         super.onResume();
+        sharedPreferences.registerOnSharedPreferenceChangeListener(new SharedPreferences.OnSharedPreferenceChangeListener() {
+            @Override
+            public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String s) {
+                viewPager2.setAdapter(pagerAdapter);
+            }
+        });
         if (checkPermissions()) {
             getLastLocation();
         }

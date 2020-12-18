@@ -32,7 +32,6 @@
                         android:layout_column="0"
                         android:fontFamily="sans-serif-thin"
                         android:gravity="center"
-                        android:text="12C"
                         android:textColor="@color/textColor"
                         android:textSize="55sp" />
 
@@ -53,7 +52,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:text="Feels like 6C"
+                        android:text="Feels like"
                         android:textColor="@color/textColor" />
 
                     <TextView
@@ -61,7 +60,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:text="Clear"
                         android:textColor="@color/textColor" />
                 </TableRow>
 
@@ -103,7 +101,6 @@
                             android:layout_height="wrap_content"
                             android:layout_column="1"
                             android:fontFamily="sans-serif"
-                            android:text="4567"
                             android:textColor="@color/textColor" />
                     </TableRow>
 

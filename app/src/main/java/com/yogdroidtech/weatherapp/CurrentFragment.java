@@ -127,14 +127,4 @@ public class CurrentFragment extends Fragment {
         });
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        sharedPreferences.registerOnSharedPreferenceChangeListener(new SharedPreferences.OnSharedPreferenceChangeListener() {
-            @Override
-            public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String s) {
-                networkCall();
-            }
-        });
-    }
 }

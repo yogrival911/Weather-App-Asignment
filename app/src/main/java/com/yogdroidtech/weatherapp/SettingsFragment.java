@@ -13,6 +13,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentStatePagerAdapter;
 
 public class SettingsFragment extends Fragment {
     Button buttonCel, buttonFar;
@@ -55,8 +57,10 @@ public class SettingsFragment extends Fragment {
                 else {
                     buttonFar.setBackgroundColor(getResources().getColor(R.color.inActiveButton));
                     buttonCel.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
-                    sharedPreferences.edit().putString("units","metric").commit();
-                    sharedPreferences.edit().putBoolean("isCelActive",true).commit();
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putString("units","metric");
+                    editor.putBoolean("isCelActive",true);
+                    editor.commit();
                 }
 
             }
@@ -68,8 +72,10 @@ public class SettingsFragment extends Fragment {
               if(isCelActive){
                   buttonFar.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
                   buttonCel.setBackgroundColor(getResources().getColor(R.color.inActiveButton));
-                  sharedPreferences.edit().putString("units","imperial").commit();
-                  sharedPreferences.edit().putBoolean("isCelActive",false).commit();
+                  SharedPreferences.Editor editor = sharedPreferences.edit();
+                  editor.putString("units","imperial");
+                  editor.putBoolean("isCelActive",false);
+                  editor.commit();
               }
               else {
                   Toast.makeText(getContext(), "Units already in Fahrenheit", Toast.LENGTH_SHORT).show();
