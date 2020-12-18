@@ -31,6 +31,7 @@ public class CurrentFragment extends Fragment {
     TextView textViewCity, textViewWind, textViewUV;
     SharedPreferences sharedPreferences;
     public static Boolean isCelActive;
+    public  static  WeatherData weatherData;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -65,6 +66,9 @@ public class CurrentFragment extends Fragment {
             @Override
             public void onResponse(Call<WeatherData> call, Response<WeatherData> response) {
                 Log.i("yogesh", response.body().toString());
+
+                weatherData = response.body();
+
                 String iconCode = response.body().getCurrent().getWeather().get(0).getIcon();
                 String url = "https://openweathermap.org/img/wn/"+iconCode+"@2x.png";
                 Log.i("yogesh", url);

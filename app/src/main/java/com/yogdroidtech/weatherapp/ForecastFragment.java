@@ -38,23 +38,9 @@ public class ForecastFragment extends Fragment {
         recyclerView = (RecyclerView)view.findViewById(R.id.recyclerView);
         linearLayoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(linearLayoutManager);
+        MyAdapter myAdapter = new MyAdapter(getContext(),CurrentFragment.weatherData);
+        recyclerView.setAdapter(myAdapter);
 
-        Retrofit retrofit = RetrofitClientInstance.getRetrofit();
-        RetrofitInterface retrofitInterface = retrofit.create(RetrofitInterface.class);
-        Call<WeatherData> dataCall = retrofitInterface.getWeatherData(lat,lon,units, appid);
-        dataCall.enqueue(new Callback<WeatherData>() {
-            @Override
-            public void onResponse(Call<WeatherData> call, Response<WeatherData> response) {
-                Log.i("yogesh", response.body().toString());
-                MyAdapter myAdapter = new MyAdapter(getContext(),response.body());
-                recyclerView.setAdapter(myAdapter);
-            }
-
-            @Override
-            public void onFailure(Call<WeatherData> call, Throwable t) {
-                Log.i("yogesh", t.toString());
-            }
-        });
 
         return view;
     }
