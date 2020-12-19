@@ -12,6 +12,7 @@ import android.widget.CalendarView;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -80,7 +81,7 @@ public class CityFragment extends Fragment {
         Retrofit retrofit = RetrofitClientInstance.getRetrofit();
         RetrofitInterface retrofitInterface = retrofit.create(RetrofitInterface.class);
 
-        Call<CoordinateCity> coordinateCityCall = retrofitInterface.getCityToCo(searchCityOnCreate,appid);
+        Call<CoordinateCity> coordinateCityCall = retrofitInterface.getCityToCo(searchCityOnCreate,RetrofitClientInstance.appID);
         coordinateCityCall.enqueue(new Callback<CoordinateCity>() {
             @Override
             public void onResponse(Call<CoordinateCity> call, Response<CoordinateCity> response) {
@@ -90,7 +91,7 @@ public class CityFragment extends Fragment {
                 Retrofit retrofit = RetrofitClientInstance.getRetrofit();
                 RetrofitInterface retrofitInterface = retrofit.create(RetrofitInterface.class);
 
-                Call<WeatherData> weatherDataCall = retrofitInterface.getWeatherData(lat, lon, units,appid);
+                Call<WeatherData> weatherDataCall = retrofitInterface.getWeatherData(lat, lon, units,RetrofitClientInstance.appID);
                 weatherDataCall.enqueue(new Callback<WeatherData>() {
                     @Override
                     public void onResponse(Call<WeatherData> call, Response<WeatherData> response) {
@@ -103,7 +104,7 @@ public class CityFragment extends Fragment {
 
                     @Override
                     public void onFailure(Call<WeatherData> call, Throwable t) {
-
+                        Toast.makeText(getContext(), "Data Parsing Failed", Toast.LENGTH_SHORT).show();
                     }
                 });
 
@@ -111,7 +112,7 @@ public class CityFragment extends Fragment {
 
             @Override
             public void onFailure(Call<CoordinateCity> call, Throwable t) {
-
+                Toast.makeText(getContext(), "Data Parsing Failed", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -124,7 +125,7 @@ public class CityFragment extends Fragment {
                 Retrofit retrofit = RetrofitClientInstance.getRetrofit();
                 RetrofitInterface retrofitInterface = retrofit.create(RetrofitInterface.class);
 
-                Call<CoordinateCity> coordinateCityCall = retrofitInterface.getCityToCo(searchCity,appid);
+                Call<CoordinateCity> coordinateCityCall = retrofitInterface.getCityToCo(searchCity,RetrofitClientInstance.appID);
                 coordinateCityCall.enqueue(new Callback<CoordinateCity>() {
                     @Override
                     public void onResponse(Call<CoordinateCity> call, Response<CoordinateCity> response) {
@@ -136,7 +137,7 @@ public class CityFragment extends Fragment {
                         Retrofit retrofit = RetrofitClientInstance.getRetrofit();
                         RetrofitInterface retrofitInterface = retrofit.create(RetrofitInterface.class);
 
-                        Call<WeatherData> weatherDataCall = retrofitInterface.getWeatherData(lat, lon, units,appid);
+                        Call<WeatherData> weatherDataCall = retrofitInterface.getWeatherData(lat, lon, units,RetrofitClientInstance.appID);
                         weatherDataCall.enqueue(new Callback<WeatherData>() {
                             @Override
                             public void onResponse(Call<WeatherData> call, Response<WeatherData> response) {
@@ -149,14 +150,14 @@ public class CityFragment extends Fragment {
 
                             @Override
                             public void onFailure(Call<WeatherData> call, Throwable t) {
-
+                                Toast.makeText(getContext(), "Data Parsing Failed", Toast.LENGTH_SHORT).show();
                             }
                         });
                     }
 
                     @Override
                     public void onFailure(Call<CoordinateCity> call, Throwable t) {
-
+                        Toast.makeText(getContext(), "Data Parsing Failed", Toast.LENGTH_SHORT).show();
                     }
                 });
             }
@@ -179,7 +180,7 @@ public class CityFragment extends Fragment {
                 Retrofit retrofit = RetrofitClientInstance.getRetrofit();
                 RetrofitInterface retrofitInterface = retrofit.create(RetrofitInterface.class);
 
-                Call<CoordinateCity> coordinateCityCall = retrofitInterface.getCityToCo(searchCity,appid);
+                Call<CoordinateCity> coordinateCityCall = retrofitInterface.getCityToCo(searchCity,RetrofitClientInstance.appID);
                 coordinateCityCall.enqueue(new Callback<CoordinateCity>() {
                     @Override
                     public void onResponse(Call<CoordinateCity> call, Response<CoordinateCity> response) {
@@ -203,7 +204,7 @@ public class CityFragment extends Fragment {
 
                             @Override
                             public void onFailure(Call<WeatherData> call, Throwable t) {
-
+                                Toast.makeText(getContext(), "Data Parsing Failed", Toast.LENGTH_SHORT).show();
                             }
                         });
 
@@ -211,7 +212,7 @@ public class CityFragment extends Fragment {
 
                     @Override
                     public void onFailure(Call<CoordinateCity> call, Throwable t) {
-
+                        Toast.makeText(getContext(), "Data Parsing Failed", Toast.LENGTH_SHORT).show();
                     }
                 });
 

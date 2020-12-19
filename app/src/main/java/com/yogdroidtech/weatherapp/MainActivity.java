@@ -41,23 +41,19 @@ public class MainActivity extends AppCompatActivity {
     SharedPreferences sharedPreferences;
     ViewPager2 viewPager2;
     PagerAdapter pagerAdapter;
-    CurrentFragment currentFragment;
-    ForecastFragment forecastFragment;
-    CityFragment cityFragment;
-    SettingsFragment settingsFragment;
-//final CurrentFragment currentFragment = new CurrentFragment();
-//    final ForecastFragment forecastFragment = new ForecastFragment();
-//    final  CityFragment cityFragment = new CityFragment();
-//    final SettingsFragment settingsFragment = new SettingsFragment();
-//    final FragmentManager fm = getSupportFragmentManager();
-
-
+    SharedPreferences.OnSharedPreferenceChangeListener sharedPreferenceChangeListener;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        sharedPreferenceChangeListener = new SharedPreferences.OnSharedPreferenceChangeListener() {
+            @Override
+            public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String s) {
+                viewPager2.setAdapter(pagerAdapter);
+            }
+        };
 
         Boolean isFirstRun = sharedPreferences.getBoolean("isFirstRun", true);
 
@@ -216,12 +212,7 @@ public class MainActivity extends AppCompatActivity {
     public void onResume()
     {
         super.onResume();
-        sharedPreferences.registerOnSharedPreferenceChangeListener(new SharedPreferences.OnSharedPreferenceChangeListener() {
-            @Override
-            public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String s) {
-                viewPager2.setAdapter(pagerAdapter);
-            }
-        });
+        sharedPreferences.registerOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
         if (checkPermissions()) {
             getLastLocation();
         }

@@ -4,6 +4,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RetrofitClientInstance {
+    public static String appID = "8931dea8ea47fe58dee9f3e02a31c049";
     private static Retrofit retrofit=null;
     public static Retrofit getRetrofit() {
         if (retrofit == null) {

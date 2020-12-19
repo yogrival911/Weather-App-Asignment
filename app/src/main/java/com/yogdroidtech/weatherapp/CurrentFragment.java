@@ -27,7 +27,6 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 
 public class CurrentFragment extends Fragment {
-    String appid = "8931dea8ea47fe58dee9f3e02a31c049";
     String lat, lon, units;
     ImageView imageViewIcon;
     TextView textViewTemp, textViewFeels,textViewDesc, textViewMin,textViewMax,textViewPress,textViewHumid,textViewVisible,textViewClouds;
@@ -81,7 +80,7 @@ public class CurrentFragment extends Fragment {
         Retrofit retrofit = RetrofitClientInstance.getRetrofit();
         RetrofitInterface retrofitInterface = retrofit.create(RetrofitInterface.class);
 
-        Call<WeatherData> dataCall = retrofitInterface.getWeatherData(lat,lon,units, appid);
+        Call<WeatherData> dataCall = retrofitInterface.getWeatherData(lat,lon,units, RetrofitClientInstance.appID);
         dataCall.enqueue(new Callback<WeatherData>() {
             @Override
             public void onResponse(Call<WeatherData> call, Response<WeatherData> response) {
