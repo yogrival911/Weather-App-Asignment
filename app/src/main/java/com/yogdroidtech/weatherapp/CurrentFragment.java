@@ -36,6 +36,7 @@ public class CurrentFragment extends Fragment {
     public static Boolean isCelActive;
     public  static  WeatherData weatherData;
     public static  String userName;
+    String jj;
     ProgressBar proBar;
     @Nullable
     @Override
