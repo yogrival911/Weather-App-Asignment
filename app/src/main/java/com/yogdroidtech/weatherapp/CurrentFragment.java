@@ -38,6 +38,7 @@ public class CurrentFragment extends Fragment {
     public static  String userName;
     String jj;
     ProgressBar proBar;
+    
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
