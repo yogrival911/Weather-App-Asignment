@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -35,6 +36,7 @@ public class CurrentFragment extends Fragment {
     public static Boolean isCelActive;
     public  static  WeatherData weatherData;
     public static  String userName;
+    ProgressBar proBar;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -60,6 +62,7 @@ public class CurrentFragment extends Fragment {
         textViewClouds =(TextView)view.findViewById(R.id.textViewClouds);
         textViewWind = (TextView)view.findViewById(R.id.textViewWind);
         textViewUV = (TextView)view.findViewById(R.id.textViewUV);
+        proBar = (ProgressBar)view.findViewById(R.id.proBar);
 
         ConnectivityManager cm = (ConnectivityManager)getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
@@ -115,6 +118,7 @@ public class CurrentFragment extends Fragment {
                 textViewVisible.setText(response.body().getCurrent().getVisibility()+" meters");
                 textViewWind.setText(response.body().getCurrent().getWindSpeed() + " m/s");
                 textViewUV.setText(response.body().getCurrent().getUvi().toString());
+                proBar.setVisibility(View.GONE);
 
             }
 
